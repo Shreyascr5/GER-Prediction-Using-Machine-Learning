@@ -337,3 +337,219 @@ teacher_obc_female,0.46064272138539475,9.485609878445069e-21,Not Normal
 teacher_obc_total,0.5400472736139176,2.6018005579828146e-19,Not Normal
 total_universities,0.8962699689977965,1.5132520165969518e-08,Not Normal
 imputed_flag,0.580217255672747,1.642231585181704e-18,Not Normal
+
+
+Key Statistical Conclusion
+
+100% of your numerical features failed the Shapiro-Wilk normality test.
+
+Evidence:
+
+P-value < 0.05 for every numerical feature
+
+Including the target:
+
+ger_all_total
+P-value = 0.002879
+Not Normal
+What this means
+
+Since:
+
+Target (GER) = Not Normal
+Predictors = Not Normal
+
+You should use:
+
+Spearman Correlation
+
+instead of:
+
+Pearson Correlation
+
+for hypothesis testing and relationship analysis.
+
+This is one of the strongest findings you can report because the choice of statistical test is now objectively justified.
+
+Week 4 Report Interpretation
+Distribution Analysis
+Distribution analysis was performed on all 55 numerical variables.
+Most variables exhibited moderate to high positive skewness.
+Educational enrollment variables, teacher variables, and gender parity indicators were highly right-skewed.
+GER itself was moderately right-skewed (Skewness = 0.6824).
+Normality Analysis
+Shapiro-Wilk tests were applied to all numerical variables.
+All variables returned p-values below 0.05.
+Therefore, the null hypothesis of normality was rejected for every numerical feature.
+Statistical Implication
+
+Because the assumptions of normality were violated:
+
+Pearson correlation was not appropriate.
+Spearman rank correlation was selected for relationship analysis and hypothesis testing.
+Non-parametric statistical methods were preferred throughout the project.
+Important Insight for Week 5
+
+Your dataset is heavily skewed because variables such as:
+
+enr_grand_total
+enr_ug_total
+teacher_total
+teacher_obc_total
+
+represent counts.
+
+For Week 5 feature engineering, we should create transformed features such as:
+
+np.log1p(enr_grand_total)
+np.log1p(enr_ug_total)
+np.log1p(teacher_total)
+np.log1p(total_universities)
+
+and compare:
+
+Original Distribution
+vs
+Log-Transformed Distribution
+
+This is a very common and academically strong feature-engineering step for count-based educational data.
+
+Then Week 5 should focus on:
+
+Data leakage removal
+Log transformations
+Ratio-based features
+Feature importance screening
+Feature engineering comparison (before vs after)
+
+Step 1 — Remove Leakage Variables
+
+We are predicting:
+
+ger_all_total
+
+Therefore remove:
+
+LEAKAGE_FEATURES = [
+
+    "ger_all_male",
+    "ger_all_female",
+
+    "ger_sc_male",
+    "ger_sc_female",
+    "ger_sc_total",
+
+    "ger_st_male",
+    "ger_st_female",
+    "ger_st_total"
+
+]
+
+Reason:
+
+These variables are directly related to the target and would artificially inflate model performance.
+
+Step 2 — Log Transform Highly Skewed Variables
+
+Week 4 showed most count variables are highly right-skewed.
+
+Create:
+
+log_enr_grand_total
+log_enr_ug_total
+log_enr_pg_total
+
+log_teacher_total
+
+log_total_universities
+
+using:
+
+np.log1p()
+Step 3 — Educational Ratios
+
+These are very meaningful for GER prediction.
+
+Create:
+
+Student-Teacher Ratio
+student_teacher_ratio
+=
+enr_grand_total / teacher_total
+Students per University
+students_per_university
+=
+enr_grand_total / total_universities
+Teachers per University
+teachers_per_university
+=
+teacher_total / total_universities
+Female Participation
+female_participation_ratio
+=
+enr_grand_female / enr_grand_total
+PhD Participation
+phd_ratio
+=
+enr_phd_total / enr_grand_total
+PG Participation
+pg_ratio
+=
+enr_pg_total / enr_grand_total
+Step 4 — Correlation Recalculation
+
+After engineering:
+
+Compute correlation again:
+
+corr(new_feature, ger_all_total)
+
+Save:
+
+feature_correlation_comparison.csv
+
+Example:
+
+Feature	Correlation
+student_teacher_ratio	0.42
+phd_ratio	0.31
+pg_ratio	0.28
+Step 5 — Feature Importance Screening
+
+Train a quick:
+
+RandomForestRegressor
+
+and extract:
+
+feature_importances_
+
+Save:
+
+feature_importance.csv
+Step 6 — Before vs After Distribution
+
+For:
+
+enr_grand_total
+teacher_total
+total_universities
+
+Generate:
+
+Original Histogram
+Log Histogram
+
+Store inside:
+
+before_after_distributions/
+
+This gives strong evidence that feature engineering improved the data quality.
+
+
+week 5: 
+Feature engineering was performed after removing variables that introduced data leakage. Logarithmic transformations were applied to highly skewed educational count variables, while ratio-based educational indicators such as student-teacher ratio, teachers per university, postgraduate participation ratio, and doctoral participation ratio were created.
+
+The engineered features demonstrated stronger relationships with GER compared to several original variables. In particular, teachers_per_university, log_teacher_total, log_enr_pg_total, phd_ratio, and pg_ratio emerged as meaningful predictors. Feature importance analysis using Random Forest further identified student-teacher ratio (ptr_all_reg) as the most influential predictor of GER.
+
+The results indicate that educational infrastructure quality and faculty availability play a significant role in determining Gross Enrollment Ratio across Indian states. The engineered dataset will be used for model development and comparison in Week 6.
