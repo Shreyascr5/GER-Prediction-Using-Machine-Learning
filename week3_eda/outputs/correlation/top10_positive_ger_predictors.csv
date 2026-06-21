@@ -1,0 +1,11 @@
+Feature,Correlation_With_GER
+ger_all_male,0.9803566748872581
+ger_all_female,0.9761490276221381
+teacher_obc_female,0.28050377874742627
+teacher_sc_female,0.2567527313641313
+teacher_obc_total,0.2498204000061836
+enr_phd_female,0.2488772370532672
+ger_sc_male,0.2482013550990082
+ger_sc_total,0.23272722280815406
+teacher_total_female,0.22077347967809627
+teacher_obc_male,0.21581510254117328

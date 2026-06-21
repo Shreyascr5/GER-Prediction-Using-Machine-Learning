@@ -1,0 +1,181 @@
+First Observation: Data Leakage Detected 🚨
+
+Your top predictors are:
+
+Feature	Correlation
+ger_all_male	0.980
+ger_all_female	0.976
+
+This is a problem.
+
+Why?
+
+Because:
+
+ger_all_total
+=
+function(ger_all_male, ger_all_female)
+
+In fact:
+
+GER Total ≈ aggregation of Male + Female GER
+
+So these features are essentially giving the answer to the model.
+
+This is called:
+
+Data Leakage
+What must be done before Week 6
+
+Remove:
+
+ger_all_male
+ger_all_female
+ger_sc_male
+ger_sc_female
+ger_sc_total
+ger_st_male
+ger_st_female
+ger_st_total
+
+from the predictor set.
+
+Keep only independent predictors such as:
+
+gpi_all
+gpi_sc
+gpi_st
+
+enr_*
+
+teacher_*
+
+ptr_*
+
+total_universities
+
+This will make the GER prediction realistic.
+
+Second Observation: Teacher Variables Matter
+
+Top non-leakage features are:
+
+teacher_obc_female
+teacher_sc_female
+teacher_obc_total
+teacher_total_female
+teacher_obc_male
+
+Interpretation:
+
+States with stronger teaching workforce representation tend to have higher GER.
+
+This is actually a valuable finding for your final report.
+
+Third Observation: Enrollment Features Matter
+
+You have:
+
+enr_phd_female
+
+among top predictors.
+
+I expect:
+
+enr_grand_total
+enr_ug_total
+
+will also become important once leakage variables are removed.
+
+
+Outlier Analysis Interpretation
+
+Highest outliers:
+
+teacher_obc_female
+teacher_obc_total
+teacher_obc_male
+teacher_sc_total
+teacher_sc_male
+
+Why?
+
+AISHE data contains:
+
+Karnataka
+Tamil Nadu
+Maharashtra
+UP
+Delhi
+
+which have extremely large higher-education ecosystems.
+
+So these aren't necessarily bad outliers.
+
+They are likely:
+
+Legitimate Extreme Values
+
+
+Recommendation
+
+Do NOT remove outliers.
+
+Instead:
+
+Mention in report:
+
+Outliers were examined using the IQR method. Since the observations correspond to genuine state-level educational variations rather than data-entry errors, the outliers were retained to preserve real-world information.
+
+
+Week 3 Report Conclusions
+
+You can write:
+
+Key Findings
+Strong correlations were observed between GER-related variables and the target GER, indicating potential data leakage.
+Teacher-related indicators exhibited moderate positive correlation with GER.
+Enrollment-related variables showed meaningful association with GER levels.
+Several teacher and enrollment variables contained outliers, representing genuine state-level educational disparities.
+No duplicate records were present in the dataset.
+The dataset contains 55 numerical variables, justifying the application of PCA in Week 7.
+
+
+After removing leakage variables:
+
+ger_all_male
+ger_all_female
+ger_sc_*
+ger_st_*
+
+the highest correlations are only around:
+
+0.28
+0.25
+0.24
+
+This means:
+
+GER is not strongly explained by any single feature in the dataset.
+
+Which is completely realistic.
+
+What This Means For The Project
+
+Your problem statement is:
+
+Predict Future Gross Enrollment Ratio (GER) using educational indicators.
+
+This is now a genuine machine learning problem because:
+
+No single variable can perfectly predict GER
+
+The model will have to learn interactions between:
+
+Enrollment
+Teachers
+Universities
+Gender Parity
+PTR
+
+rather than simply reading GER subcomponents.
