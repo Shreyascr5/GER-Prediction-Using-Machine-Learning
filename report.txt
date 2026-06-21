@@ -1517,3 +1517,235 @@ Random Forest Regressor
 R²   = 0.8901
 RMSE = 3.8675
 MAE  = 2.8296
+
+
+Week 9 Deliverables
+1. Final Test Set Evaluation
+
+Use the final selected model:
+
+Random Forest Regressor
+
+Generate:
+
+R²
+MAE
+MSE
+RMSE
+MAPE
+
+Output:
+
+week9_final_evaluation/outputs/final_test_metrics.csv
+2. Generalisation Error
+
+This is probably the most important Week 9 requirement.
+
+Compute:
+
+Training R²
+Testing R²
+
+Then:
+
+Generalisation Error
+=
+Train R² - Test R²
+
+Example:
+
+Train R² = 0.95
+Test R²  = 0.89
+
+Generalisation Error = 0.06
+
+Interpretation:
+
+< 0.05  → Excellent
+0.05-0.10 → Acceptable
+> 0.10 → Possible Overfitting
+
+Output:
+
+generalisation_error.csv
+3. Learning / Loss Curves
+
+The rubric mentions:
+
+Loss Curves
+
+For Random Forest there is no epoch-based loss curve.
+
+Instead use:
+
+Learning Curve
+
+Plot:
+
+Training Size
+vs
+Training Score
+vs
+Validation Score
+
+Using:
+
+from sklearn.model_selection import learning_curve
+
+Generate:
+
+learning_curve.png
+
+This is the correct regression equivalent.
+
+4. Confusion Matrix
+
+Important:
+
+Your project is regression, not classification.
+
+A confusion matrix does not naturally exist.
+
+Academic Workaround
+
+Convert GER into categories:
+
+Low GER
+Medium GER
+High GER
+
+Example:
+
+0–20   → Low
+20–35  → Medium
+35+    → High
+
+Then:
+
+from sklearn.metrics import confusion_matrix
+
+Generate:
+
+confusion_matrix.png
+
+and
+
+classification_report.csv
+
+This satisfies the rubric requirement.
+
+5. Actual vs Predicted Plot
+
+Generate:
+
+actual_vs_predicted_final.png
+
+This is usually expected in final evaluation.
+
+6. Residual Analysis
+
+Generate:
+
+residual_plot.png
+
+This demonstrates error behavior.
+
+Final Model Evaluation
+Random Forest Regressor:
+| Metric               |  Value |
+| -------------------- | -----: |
+| Train R²             | 0.9684 |
+| Test R²              | 0.8901 |
+| MAE                  |   2.83 |
+| RMSE                 |   3.87 |
+| MAPE                 | 10.32% |
+| Generalisation Error | 0.0783 |
+Interpretation
+Test R² = 0.8901
+
+This means:
+
+The model explains approximately 89.01% of the variation in Gross Enrollment Ratio (GER).
+
+Classification:
+
+R² > 0.85 = Excellent
+
+Your model falls in the excellent category.
+
+RMSE = 3.87
+
+On average:
+
+Predictions differ from actual GER values by approximately 3.87 GER points.
+
+For an educational dataset covering multiple states and years, this is a strong result.
+
+MAPE = 10.32%
+
+Interpretation:
+
+< 10%   Excellent
+10–20%  Good
+20–50%  Acceptable
+> 50%   Poor
+
+Your result:
+
+10.32%
+
+is right on the boundary between Excellent and Good.
+
+Generalisation Error Analysis
+Train R²
+0.9684
+Test R²
+0.8901
+Generalisation Error
+0.0783
+
+Interpretation:
+
+< 0.05      Excellent
+0.05–0.10   Acceptable
+> 0.10      Overfitting Risk
+
+Your result:
+
+0.0783
+
+indicates:
+
+Moderate but acceptable overfitting. The model generalises well to unseen data and does not exhibit severe overfitting.
+
+This is completely acceptable for a Random Forest model on a dataset with only 143 observations.
+
+Final Academic Assessment
+Area	Status
+Dataset Understanding	✅
+EDA	✅
+Statistical Analysis	✅
+Feature Engineering	✅
+Cross Validation	✅
+PCA	✅
+K-Means	✅
+Hyperparameter Tuning	✅
+Ensemble Learning	✅
+Final Evaluation	✅
+Generalisation Analysis	✅
+Learning Curves	✅
+Confusion Matrix	✅
+Rubric Coverage
+Week 2 → Week 9 = Fully Completed
+
+
+
+Final project conclusion:
+
+The project developed a machine learning framework for predicting Gross Enrollment Ratio (GER) in higher education using AISHE educational indicators. A systematic workflow consisting of exploratory data analysis, statistical analysis, feature engineering, model comparison, dimensionality reduction, clustering, hyperparameter tuning, ensemble learning, and final evaluation was implemented.
+
+Among all evaluated models, the Random Forest Regressor achieved the best overall performance with a Test R² score of 0.8901, RMSE of 3.87, MAE of 2.83, and MAPE of 10.32%. Hyperparameter tuning using Grid Search and Randomized Search confirmed that the baseline model configuration was already near optimal. Ensemble learning experiments demonstrated that bagging-based Random Forest outperformed boosting and voting approaches on the dataset.
+
+The final model exhibited a generalisation error of 0.0783, indicating good predictive capability on unseen data with only moderate overfitting. Overall, the developed framework successfully predicts GER and provides a data-driven approach for analysing higher education enrollment trends across Indian states.
+
+
