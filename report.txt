@@ -901,3 +901,317 @@ Week 6 Status
 | Actual vs Predicted Plots      | ✅      |
 | Residual Plots                 | ✅      |
 | Model Ranking                  | ✅      |
+
+
+Then Week 7 will focus on:
+
+PCA
+↓
+Explained Variance
+↓
+Elbow Method
+↓
+K-Means Clustering
+↓
+Silhouette Analysis
+↓
+Cluster Visualization
+
+Week 7 Deliverables
+Part A: PCA (Dimensionality Reduction)
+Objective
+
+Reduce feature space while retaining maximum information.
+
+Analysis
+StandardScaler vs MinMaxScaler comparison
+PCA transformation
+Explained Variance Ratio
+Cumulative Explained Variance
+Select components retaining:
+95% variance
+Outputs
+pca_variance.csv
+optimal_pca_components.csv
+
+plots/
+├── explained_variance.png
+├── cumulative_variance.png
+Part B: K-Means Clustering
+Objective
+
+Identify natural groupings of states/years in GER data.
+
+K Values
+K = 2,3,4,5,6,7
+Evaluation
+Elbow Method
+
+Compute:
+
+WCSS (Inertia)
+
+Plot:
+
+K vs WCSS
+
+Output:
+
+elbow_results.csv
+elbow_plot.png
+Silhouette Analysis
+
+Compute:
+
+Silhouette Score
+
+for:
+
+K = 2 → 7
+
+Output:
+
+silhouette_results.csv
+silhouette_plot.png
+
+Automatically select:
+
+Best K
+=
+Highest Silhouette Score
+Cluster Visualization
+
+After selecting best K:
+
+Use first two PCA components.
+
+Generate:
+
+cluster_visualization.png
+
+
+Why PCA?
+You shouldn't add PCA just because the rubric says "dimensionality reduction". You should understand why it is useful in your specific dataset.
+
+Your Dataset
+
+After Week 5, you have approximately:
+
+143 rows
+60+ features
+
+This means:
+
+Features-to-samples ratio ≈ 60/143
+
+which is relatively high.
+
+You also have many highly related variables:
+
+enr_ug_male
+enr_ug_female
+enr_ug_total
+
+teacher_total_male
+teacher_total_female
+teacher_total
+
+teacher_obc_male
+teacher_obc_female
+teacher_obc_total
+
+These contain overlapping information.
+
+Why PCA Helps
+
+PCA transforms many correlated variables into a smaller number of independent components.
+
+Instead of:
+
+60 features
+
+you might retain:
+
+15 components
+
+while preserving:
+
+95% of information
+
+For example:
+
+PC1 → Overall enrollment size
+PC2 → Faculty strength
+PC3 → Gender participation
+PC4 → Social category participation
+
+rather than keeping dozens of correlated columns.
+
+In Your Project
+Without PCA
+
+Model sees:
+
+60 features
+
+including many redundant variables.
+
+This can cause:
+
+Multicollinearity
+Overfitting
+Increased training complexity
+With PCA
+
+Model sees:
+
+15–20 principal components
+
+that contain most of the information.
+
+Benefits:
+
+Reduced dimensionality
+Reduced redundancy
+Faster training
+Better clustering
+Principal Component Analysis (PCA) was applied to reduce the dimensionality of the educational dataset while retaining most of the variance. The dataset contained a large number of correlated enrollment, faculty, and demographic variables. PCA transformed these correlated features into a smaller set of uncorrelated principal components, reducing redundancy and improving the effectiveness of subsequent clustering analysis.
+
+So the purpose of PCA in your project is:
+
+✅ Satisfy Week 7 requirement
+✅ Reduce dimensionality of 60+ features
+✅ Remove redundancy among correlated educational indicators
+✅ Improve K-Means clustering quality
+❌ Not primarily to improve the Random Forest prediction model.
+
+
+
+week 7: 
+
+Output folders ready
+
+Dataset Loaded
+(143, 60)
+
+After Encoding
+(143, 95)
+
+95% Variance Retained at 35 Components
+
+Best K Selected = 2
+
+============================================================
+WEEK 7 COMPLETED
+============================================================
+
+Generated
+PCA Variance Report
+Optimal PCA Components
+Elbow Analysis
+Silhouette Analysis
+Cluster Visualization
+Cluster Assignments
+
+
+Week 7 Results Summary
+Dataset
+Original Dataset Shape: 143 × 60
+After One-Hot Encoding: 143 × 95
+
+This makes sense because:
+
+state became multiple dummy variables
+year became multiple dummy variables
+PCA Results
+Optimal Components
+95% Variance Retained at 35 Components
+Interpretation
+
+Before PCA:
+
+95 Features
+
+After PCA:
+
+35 Principal Components
+
+Variance Retained:
+
+95%
+
+Meaning:
+
+PCA reduced the dimensionality of the dataset by approximately 63% while preserving 95% of the information contained in the original variables.
+
+Calculation:
+
+Reduction =
+(95 - 35) / 95
+
+= 63.15%
+
+This is a strong PCA result.
+
+K-Means Results
+Best K
+K = 2
+
+selected automatically using:
+
+Silhouette Score
+Interpretation
+
+The educational indicators naturally form:
+
+2 major clusters
+
+Possible interpretation:
+
+Cluster 1:
+
+Higher GER states
+Better educational infrastructure
+
+Cluster 2:
+
+Lower GER states
+Lower educational participation
+
+You should inspect cluster_assignments.csv later to verify this.
+
+Week 7 Requirements Check
+Requirement	Status
+PCA Implemented	✅
+Variance Reduction	✅
+Explained Variance Analysis	✅
+Cumulative Variance Analysis	✅
+K-Means Clustering	✅
+Elbow Method	✅
+Silhouette Analysis	✅
+Automatic Best K Selection	✅
+Cluster Visualization	✅
+Week 7 Completion
+Week 7 = 100% Complete
+Report Interpretation
+
+You can write:
+
+Writing
+
+Principal Component Analysis (PCA) was applied to reduce the dimensionality of the educational dataset prior to clustering. After one-hot encoding, the dataset contained 95 features. PCA analysis showed that 35 principal components were sufficient to retain approximately 95% of the total variance, resulting in a dimensionality reduction of about 63%.
+
+K-Means clustering was then performed on the PCA-transformed data. The Elbow Method and Silhouette Analysis were used to evaluate cluster quality for K values ranging from 2 to 7. The highest silhouette score was obtained for K = 2, indicating that the dataset naturally forms two major clusters. These clusters represent distinct groups of educational characteristics across different state-year observations.
+
+Current Project Status
+✅ Week 2 - Data Understanding
+✅ Week 3 - Exploratory Data Analysis
+✅ Week 4 - Statistical Analysis
+✅ Week 5 - Feature Engineering
+✅ Week 6 - Model Comparison & Cross Validation
+✅ Week 7 - PCA & K-Means Clustering
+
+⏭ Week 8
+   - Grid Search
+   - Randomized Search
+   - Ensemble Methods
