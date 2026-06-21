@@ -1,0 +1,5 @@
+Hypothesis,Feature,Method,Statistic,P_Value,Decision
+Teacher Availability influences GER,teacher_total,Spearman,0.23929700004557314,0.003996950394948113,Reject H0
+Universities influence GER,total_universities,Spearman,0.11167408079353817,0.18422278040639167,Fail to Reject H0
+Enrollment influences GER,enr_grand_total,Spearman,0.1720113596956521,0.039952374046655546,Reject H0
+Gender Parity influences GER,gpi_all,Spearman,-0.009156907848162563,0.9135658314148826,Fail to Reject H0

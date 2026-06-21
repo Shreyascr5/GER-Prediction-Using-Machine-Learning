@@ -1,0 +1,56 @@
+Feature,Skewness,Kurtosis,Distribution_Type
+ger_all_male,0.7195,1.875,Moderately Right Skewed
+ger_all_female,0.8549,0.6495,Moderately Right Skewed
+ger_all_total,0.6824,0.7461,Moderately Right Skewed
+ger_sc_male,3.157,11.9323,Highly Right Skewed
+ger_sc_female,4.0695,18.4576,Highly Right Skewed
+ger_sc_total,3.4311,14.7431,Highly Right Skewed
+ger_st_male,0.2657,-0.6348,Approximately Normal
+ger_st_female,0.2419,-0.6627,Approximately Normal
+ger_st_total,0.1913,-0.7309,Approximately Normal
+gpi_all,5.5241,38.914,Highly Right Skewed
+gpi_sc,6.5155,41.1757,Highly Right Skewed
+gpi_st,4.3348,22.3708,Highly Right Skewed
+enr_phd_male,1.7195,2.8261,Highly Right Skewed
+enr_phd_female,2.1295,5.4547,Highly Right Skewed
+enr_phd_total,1.8896,3.9211,Highly Right Skewed
+enr_pg_male,1.84,3.3422,Highly Right Skewed
+enr_pg_female,1.7593,2.8214,Highly Right Skewed
+enr_pg_total,1.7882,3.0167,Highly Right Skewed
+enr_ug_male,2.0955,4.9614,Highly Right Skewed
+enr_ug_female,2.2449,6.1433,Highly Right Skewed
+enr_ug_total,2.1567,5.4656,Highly Right Skewed
+enr_grand_male,2.288,5.8114,Highly Right Skewed
+enr_grand_female,2.3336,6.4055,Highly Right Skewed
+enr_grand_total,2.3029,6.0466,Highly Right Skewed
+enr_sc_male,2.3844,6.8056,Highly Right Skewed
+enr_sc_female,2.6086,8.102,Highly Right Skewed
+enr_sc_total,2.4951,7.4328,Highly Right Skewed
+enr_st_male,1.547,2.0388,Highly Right Skewed
+enr_st_female,1.4755,1.8862,Highly Right Skewed
+enr_st_total,1.5005,1.9389,Highly Right Skewed
+enr_obc_male,1.9926,3.8367,Highly Right Skewed
+enr_obc_female,2.1981,4.9125,Highly Right Skewed
+enr_obc_total,2.0895,4.3368,Highly Right Skewed
+enr_pwd_male,2.0031,4.6693,Highly Right Skewed
+enr_pwd_female,2.5012,6.9965,Highly Right Skewed
+enr_pwd_total,2.0966,4.9796,Highly Right Skewed
+enr_muslim_male,1.5333,1.7787,Highly Right Skewed
+enr_muslim_female,1.9007,3.3544,Highly Right Skewed
+enr_muslim_total,1.7116,2.5354,Highly Right Skewed
+ptr_all_reg_dist,1.475,2.3268,Highly Right Skewed
+ptr_all_reg,1.8872,4.1479,Highly Right Skewed
+teacher_total_male,1.4961,1.2525,Highly Right Skewed
+teacher_total_female,1.7754,2.9543,Highly Right Skewed
+teacher_total,1.5253,1.4609,Highly Right Skewed
+teacher_sc_male,1.6995,1.6623,Highly Right Skewed
+teacher_sc_female,2.3602,5.5033,Highly Right Skewed
+teacher_sc_total,1.8581,2.5473,Highly Right Skewed
+teacher_st_male,1.2095,0.2559,Highly Right Skewed
+teacher_st_female,0.9374,-0.1157,Moderately Right Skewed
+teacher_st_total,0.7649,-0.801,Moderately Right Skewed
+teacher_obc_male,2.8453,9.0812,Highly Right Skewed
+teacher_obc_female,4.1432,18.5671,Highly Right Skewed
+teacher_obc_total,3.4802,13.7182,Highly Right Skewed
+total_universities,0.7143,-0.5865,Moderately Right Skewed
+imputed_flag,0.8333,-1.3056,Moderately Right Skewed
