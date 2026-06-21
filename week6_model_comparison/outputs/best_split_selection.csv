@@ -1,0 +1,5 @@
+Model,Best_Split,Best_Scaler,Best_K
+Linear Regression,75-25,MinMaxScaler,2
+SVR,85-15,StandardScaler,6
+Random Forest,85-15,MinMaxScaler,6
+Gradient Boosting,80-20,StandardScaler,3

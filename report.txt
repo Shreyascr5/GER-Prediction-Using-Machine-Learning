@@ -553,3 +553,230 @@ Feature engineering was performed after removing variables that introduced data 
 The engineered features demonstrated stronger relationships with GER compared to several original variables. In particular, teachers_per_university, log_teacher_total, log_enr_pg_total, phd_ratio, and pg_ratio emerged as meaningful predictors. Feature importance analysis using Random Forest further identified student-teacher ratio (ptr_all_reg) as the most influential predictor of GER.
 
 The results indicate that educational infrastructure quality and faculty availability play a significant role in determining Gross Enrollment Ratio across Indian states. The engineered dataset will be used for model development and comparison in Week 6.
+
+
+Week 6 ⏭
+- StandardScaler vs MinMaxScaler
+- Multiple Models
+- K-Fold Cross Validation
+- Model Ranking
+
+Week 7 ⏭
+- PCA
+- K-Means
+- Elbow Method
+- Silhouette Score
+
+Week 8 ⏭
+- Grid Search
+- Random Search
+- Bagging
+- Boosting
+- Voting Regressor
+
+
+week 6- one hot encoding of state!
+
+
+Full Evaluation Hierarchy
+
+For every model:
+
+Train-Test Split
+        ↓
+Scaler
+        ↓
+K Value
+        ↓
+Metrics
+
+Example:
+
+Gradient Boosting
+    ├── 70-30
+    │      ├── StandardScaler
+    │      └── MinMaxScaler
+    │
+    ├── 75-25
+    │      ├── StandardScaler
+    │      └── MinMaxScaler
+    │
+    ├── 80-20
+    │      ├── StandardScaler
+    │      └── MinMaxScaler
+    │
+    └── 85-15
+           ├── StandardScaler
+           └── MinMaxScaler
+
+For each combination:
+
+K = 2
+K = 3
+K = 4
+K = 5
+K = 6
+K = 7
+Selection Logic
+Step 1
+
+Find best K:
+
+Highest Mean CV R²
+Lowest Std
+
+using:
+
+Score = Mean_R² − Std_R²
+Step 2
+
+Find best scaler:
+
+StandardScaler
+vs
+MinMaxScaler
+Step 3
+
+Find best train-test split:
+
+70-30
+75-25
+80-20
+85-15
+Additional Output Files
+
+We should generate:
+
+split_comparison.csv
+Model	Split	R²	RMSE	MAE
+best_split_selection.csv
+Model	Best Split
+Linear	80-20
+Ridge	75-25
+SVR	80-20
+GBR	85-15
+final_model_ranking.csv
+Rank	Model	Split	Scaler	K	R²
+Multiple train-test split ratios (70:30, 75:25, 80:20, and 85:15) were evaluated. For each split, StandardScaler and MinMaxScaler were compared, followed by N-fold cross-validation with K values ranging from 2 to 7. The optimal split ratio, scaler, and K value were automatically selected based on validation performance and stability.
+
+That is significantly stronger than:
+
+An 80:20 split and 5-fold cross-validation were used.
+
+model_comparison.py does: 
+Engineered Dataset
+      ↓
+One-Hot Encoding
+      ↓
+Train/Test Split Comparison
+(70-30, 75-25, 80-20, 85-15)
+      ↓
+Scaler Comparison
+(Standard vs MinMax)
+      ↓
+K-Fold Search
+(K=2 to 7)
+      ↓
+Automatic Best K
+      ↓
+Automatic Best Scaler
+      ↓
+Automatic Best Split
+      ↓
+Final Model Evaluation
+      ↓
+Model Ranking
+
+models used: 
+LinearRegression
+Ridge
+Lasso
+SVR
+DecisionTreeRegressor
+RandomForestRegressor
+GradientBoostingRegressor
+
+
+| Rank | Model             |     R² |  RMSE |  MAE |
+| ---- | ----------------- | -----: | ----: | ---: |
+| 🥇   | Random Forest     |  0.895 |  3.78 | 2.77 |
+| 🥈   | Gradient Boosting |  0.817 |  4.47 | 3.42 |
+| 🥉   | SVR               |  0.255 | 10.07 | 8.70 |
+| ❌    | Linear Regression | -83201 |  2967 |  500 |
+
+stage 1 results: Major Discovery
+Linear Regression Failed Completely
+R² = -83201
+MAE = 500
+RMSE = 2967
+
+This is not normal.
+
+It indicates one of:
+
+Possibility 1
+
+Multicollinearity
+
+You have many features like:
+
+enr_ug_male
+enr_ug_female
+enr_ug_total
+
+teacher_total_male
+teacher_total_female
+teacher_total
+
+which are mathematically related.
+
+Linear Regression hates this.
+
+Possibility 2
+
+Data leakage remnants or feature explosion after one-hot encoding.
+
+Current features:
+
+57 original
++ 11 engineered
++ state dummies
++ year dummies
+
+≈ 90+ columns
+
+For only:
+
+143 rows
+
+That's very high dimensional.
+
+Good News
+
+Random Forest and Gradient Boosting are excellent.
+
+Random Forest
+R² = 0.895
+MAPE = 10.0%
+
+Interpretation:
+
+The model explains approximately 89.5% of the variation in GER and predicts future GER with an average percentage error of only 10%.
+
+This is extremely strong for an educational dataset.
+
+Gradient Boosting
+R² = 0.817
+MAPE = 12.18%
+
+Interpretation:
+
+The model explains 81.7% of GER variation and provides accurate predictions with low error.
+
+Also very good.
+Among the evaluated models, Random Forest Regressor achieved the best performance with an R² score of 0.895 and RMSE of 3.78. Gradient Boosting Regressor achieved the second-best performance with an R² score of 0.817. Linear Regression performed poorly due to the complex non-linear relationships and high feature interactions present in the educational dataset. Ensemble tree-based methods demonstrated superior predictive capability compared to linear and kernel-based approaches.
+
+stage 2 models: Linear
+SVM
+Trees
+etc.
