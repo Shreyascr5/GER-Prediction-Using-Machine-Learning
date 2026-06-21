@@ -2,6 +2,16 @@ import os
 import warnings
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.linear_model import (
+    LinearRegression,
+    Ridge,
+    Lasso
+)
+
+from sklearn.tree import (
+    DecisionTreeRegressor
+)
 
 from sklearn.model_selection import (
     train_test_split,
@@ -79,7 +89,6 @@ numerical_cols = X.select_dtypes(
     exclude=["object"]
 ).columns.tolist()
 
-
 print("\nCategorical Columns:")
 print(categorical_cols)
 
@@ -92,8 +101,19 @@ models = {
     "Linear Regression":
         LinearRegression(),
 
+    "Ridge Regression":
+        Ridge(random_state=42),
+
+    "Lasso Regression":
+        Lasso(random_state=42),
+
     "SVR":
         SVR(),
+
+    "Decision Tree":
+        DecisionTreeRegressor(
+            random_state=42
+        ),
 
     "Random Forest":
         RandomForestRegressor(
@@ -304,6 +324,82 @@ for model_name, model in models.items():
     predictions = best_pipeline.predict(
         X_test
     )
+    prediction_df = pd.DataFrame({
+
+        "Actual": y_test,
+
+        "Predicted": predictions
+    })
+    plt.figure(figsize=(8,6))
+
+    plt.scatter(
+        y_test,
+        predictions
+    )
+
+    plt.plot(
+
+        [y_test.min(), y_test.max()],
+
+        [y_test.min(), y_test.max()],
+
+        "r--"
+    )
+
+    plt.xlabel("Actual GER")
+
+    plt.ylabel("Predicted GER")
+
+    plt.title(
+        f"Actual vs Predicted - {model_name}"
+    )
+
+    plt.tight_layout()
+
+    plt.savefig(
+
+        f"{OUTPUT_DIR}/plots/actual_vs_predicted_{model_name.replace(' ','_')}.png"
+    )
+
+    plt.close()
+    residuals = y_test - predictions
+
+    plt.figure(figsize=(8,6))
+
+    plt.scatter(
+        predictions,
+        residuals
+    )
+
+    plt.axhline(
+        y=0,
+        linestyle="--"
+    )
+
+    plt.xlabel("Predicted GER")
+
+    plt.ylabel("Residual")
+
+    plt.title(
+        f"Residual Plot - {model_name}"
+    )
+
+    plt.tight_layout()
+
+    plt.savefig(
+
+        f"{OUTPUT_DIR}/plots/residual_{model_name.replace(' ','_')}.png"
+    )
+
+    plt.close()
+
+    prediction_df.to_csv(
+
+        f"{OUTPUT_DIR}/predictions_{model_name.replace(' ','_')}.csv",
+
+        index=False
+)
+    
 
     mae = mean_absolute_error(
         y_test,
@@ -495,6 +591,62 @@ model_df = model_df.sort_values(
 model_df.to_csv(
 
     f"{OUTPUT_DIR}/model_comparison.csv",
+
+    index=False
+)
+ranking_df = model_df.sort_values(
+
+    by="R2",
+
+    ascending=False
+)
+
+ranking_df.insert(
+
+    0,
+
+    "Rank",
+
+    range(
+        1,
+        len(ranking_df)+1
+    )
+)
+
+ranking_df.to_csv(
+
+    f"{OUTPUT_DIR}/model_ranking.csv",
+
+    index=False
+)
+plt.figure(figsize=(10,6))
+
+plt.bar(
+
+    ranking_df["Model"],
+
+    ranking_df["R2"]
+)
+
+plt.xticks(rotation=45)
+
+plt.ylabel("R² Score")
+
+plt.title("Model Performance Comparison")
+
+plt.tight_layout()
+
+plt.savefig(
+
+    f"{OUTPUT_DIR}/plots/model_r2_comparison.png"
+)
+
+plt.close()
+best_model = ranking_df.iloc[0]
+
+best_model.to_frame().T.to_csv(
+
+    f"{OUTPUT_DIR}/best_model_metrics.csv",
 
     index=False
 )
