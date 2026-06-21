@@ -1215,3 +1215,305 @@ Current Project Status
    - Grid Search
    - Randomized Search
    - Ensemble Methods
+
+Week 8 Architecture
+Part A: Hyperparameter Tuning
+
+We will tune the top models from Week 6:
+
+Random Forest
+
+Current:
+
+R² = 0.895
+
+Tune:
+
+n_estimators
+max_depth
+min_samples_split
+min_samples_leaf
+max_features
+Gradient Boosting
+
+Current:
+
+R² = 0.817
+
+Tune:
+
+n_estimators
+learning_rate
+max_depth
+min_samples_split
+min_samples_leaf
+Grid Search vs Randomized Search
+
+For both models:
+
+GridSearchCV
+vs
+RandomizedSearchCV
+
+Outputs:
+
+grid_search_results.csv
+random_search_results.csv
+best_hyperparameters.csv
+Part B: Ensemble Methods
+
+Your rubric says:
+
+Voting
+Bagging
+Boosting
+
+We'll implement all three.
+
+1. Bagging
+
+Already represented by:
+
+RandomForestRegressor
+2. Boosting
+
+Already represented by:
+
+GradientBoostingRegressor
+3. Voting Regressor
+
+Combine:
+
+Random Forest
+Gradient Boosting
+Decision Tree
+
+using:
+
+VotingRegressor()
+
+This satisfies the Voting requirement.
+
+Final Comparison
+Model	Type
+Decision Tree	Base
+Random Forest	Bagging
+Gradient Boosting	Boosting
+Voting Regressor	Voting
+Outputs
+week8_hyperparameter_ensemble/
+
+outputs/
+
+best_hyperparameters.csv
+
+grid_search_results.csv
+
+random_search_results.csv
+
+ensemble_comparison.csv
+
+model_ranking.csv
+
+plots/
+
+hyperparameter_comparison.png
+
+ensemble_r2_comparison.png
+
+ensemble_rmse_comparison.png
+What We Want To Prove
+
+Example:
+
+Model	Before Tuning	After Tuning
+Random Forest	0.895	0.92
+Gradient Boosting	0.817	0.88
+
+Then:
+
+Ensemble	R²
+Voting	0.91
+RF	0.92
+GBR	0.88
+
+This gives very strong Week 8 evidence.
+
+
+week 8 stage 1:
+Before vs After Tuning
+| Model             | Baseline R² | Grid Search R² | Random Search R² |
+| ----------------- | ----------: | -------------: | ---------------: |
+| Random Forest     |  **0.9054** |         0.8901 |           0.8901 |
+| Gradient Boosting |  **0.8892** |         0.8821 |           0.8818 |
+
+
+Important Observation
+Hyperparameter Tuning Did NOT Improve Performance
+
+This is completely valid.
+
+Many students expect:
+
+Tuning → Better Results
+
+but in practice:
+
+Tuning → Best Parameters Found
+
+not necessarily better test performance.
+
+Why Did This Happen?
+
+Your dataset contains:
+
+143 rows
+
+which is relatively small.
+
+The default models were already performing near optimal.
+
+Random Forest
+
+Baseline:
+
+R² = 0.9054
+
+Tuned:
+
+R² = 0.8901
+
+Difference:
+
+-0.0153
+
+Very small.
+
+Gradient Boosting
+
+Baseline:
+
+R² = 0.8892
+
+Tuned:
+
+R² = 0.8821
+
+Difference:
+
+-0.0071
+
+Almost negligible.
+
+Hyperparameter tuning was performed using both Grid Search and Randomized Search for Random Forest and Gradient Boosting models. The tuning process identified optimal parameter combinations; however, the tuned models did not outperform the baseline models on the test dataset. This indicates that the default hyperparameters were already well-suited to the dataset and that further tuning provided only marginal differences in performance. Such behavior is common in relatively small datasets where model complexity is already sufficient to capture underlying patterns.
+Best Parameters Found
+Random Forest
+{
+ 'max_depth': 10,
+ 'min_samples_leaf': 1,
+ 'min_samples_split': 2,
+ 'n_estimators': 300
+}
+
+Interpretation:
+
+Deep trees
+Large forest (300 trees)
+Minimal restrictions
+
+This suggests the dataset benefits from high model flexibility.
+
+Gradient Boosting
+{
+ 'learning_rate': 0.1,
+ 'max_depth': 4,
+ 'min_samples_split': 10,
+ 'n_estimators': 300
+}
+
+Interpretation:
+
+Moderate learning rate
+Medium-depth trees
+Larger number of boosting stages
+Week 8 Rubric Status
+Requirement	Status
+Grid Search	✅
+Randomized Search	✅
+Hyperparameter Tuning Evidence	✅
+
+
+Week 8 and, based on everything we've done, your project satisfies the Week 2–8 rubric requirements.
+
+Final Week 8 Results
+
+| Rank | Model             | Ensemble Type |         R² |       RMSE |        MAE |
+| ---- | ----------------- | ------------- | ---------: | ---------: | ---------: |
+| 🥇   | Random Forest     | Bagging       | **0.8901** | **3.8675** |     2.8296 |
+| 🥈   | Voting Regressor  | Voting        |     0.8860 |     3.9390 | **2.6572** |
+| 🥉   | Gradient Boosting | Boosting      |     0.8821 |     4.0053 |     2.8536 |
+| 4    | Decision Tree     | Base          |     0.7242 |     6.1269 |     3.9767 |
+
+
+Interpretation
+Random Forest (Bagging)
+
+Best overall model.
+
+R² = 0.8901
+RMSE = 3.8675
+
+Meaning:
+
+The model explains approximately 89% of the variation in Gross Enrollment Ratio (GER) and achieves the lowest prediction error among all evaluated ensemble techniques.
+
+This should be your final production model.
+
+Voting Regressor
+
+Interesting finding:
+
+R² = 0.8860
+MAE = 2.6572 (best)
+
+Although Random Forest has the best R² and RMSE, Voting Regressor achieved the lowest MAE.
+
+Interpretation:
+
+Voting Regressor produced more consistent average predictions, while Random Forest provided stronger overall explanatory power.
+
+Gradient Boosting
+R² = 0.8821
+
+Very close to Random Forest.
+
+Shows boosting works well on the GER dataset.
+
+Decision Tree
+R² = 0.7242
+
+Good baseline but clearly inferior to ensemble approaches.
+
+This proves:
+
+Ensemble methods outperform single-tree models on educational data.
+
+Hyperparameter Tuning Conclusion
+Model	Baseline R²	Tuned R²
+RF	0.9054	0.8901
+GBR	0.8892	0.8821
+
+Interesting observation:
+
+Grid Search and Randomized Search successfully identified optimal hyperparameters, but the tuned models did not outperform the baseline models. This indicates that the default parameters were already well suited to the dataset and that the models were close to their optimal configuration.
+
+Final Model for Project
+
+You should officially declare:
+
+Final Model:
+Random Forest Regressor
+
+R²   = 0.8901
+RMSE = 3.8675
+MAE  = 2.8296

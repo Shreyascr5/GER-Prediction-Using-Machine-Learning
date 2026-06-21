@@ -1,0 +1,5 @@
+Model,Best_Params
+Random Forest Grid,"{'model__max_depth': 10, 'model__min_samples_leaf': 1, 'model__min_samples_split': 2, 'model__n_estimators': 300}"
+Random Forest Random,"{'model__n_estimators': 300, 'model__min_samples_split': 2, 'model__min_samples_leaf': 1, 'model__max_depth': 10}"
+GBR Grid,"{'model__learning_rate': 0.1, 'model__max_depth': 4, 'model__min_samples_split': 10, 'model__n_estimators': 300}"
+GBR Random,"{'model__n_estimators': 300, 'model__min_samples_split': 5, 'model__max_depth': 3, 'model__learning_rate': 0.1}"
